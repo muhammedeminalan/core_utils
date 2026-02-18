@@ -1,0 +1,25 @@
+name: core_utils
+description: "A collection of Flutter/Dart extensions and reusable widgets for rapid UI development. Context helpers, navigation shortcuts, text builders, layout extensions, and customizable widgets."
+version: 0.1.0
+homepage: https://github.com/muhammedeminalan/core_utils
+repository: https://github.com/muhammedeminalan/core_utils
+issue_tracker: https://github.com/muhammedeminalan/core_utils/issues
+# publish_to: 'none'  # Uncomment to prevent publishing to pub.dev
+topics:
+  - extensions
+  - widgets
+  - ui
+  - utilities
+
+environment:
+  sdk: ^3.11.0
+  flutter: ">=3.29.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0

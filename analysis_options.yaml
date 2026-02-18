@@ -1,0 +1,36 @@
+include: package:flutter_lints/flutter.yaml
+
+analyzer:
+  errors:
+    missing_return: error
+    dead_code: warning
+  exclude:
+    - "**/*.g.dart"
+    - "**/*.freezed.dart"
+
+linter:
+  rules:
+    # ── Style ──
+    prefer_single_quotes: true
+    prefer_const_constructors: true
+    prefer_const_declarations: true
+    prefer_final_locals: true
+    prefer_final_in_for_each: true
+    sort_child_properties_last: true
+    use_decorated_box: true
+    sized_box_for_whitespace: true
+    avoid_unnecessary_containers: true
+
+    # ── Safety ──
+    always_declare_return_types: true
+    avoid_print: true
+    avoid_relative_lib_imports: true
+    cancel_subscriptions: true
+    close_sinks: true
+
+    # ── Documentation (uyarı seviyesinde, engellemesin) ──
+    # public_member_api_docs: false  # İsteğe bağlı aç
+
+    # ── Disabled (aşırı katı olmasın) ──
+    always_specify_types: false
+    lines_longer_than_80_chars: false
