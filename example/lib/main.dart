@@ -1,5 +1,5 @@
-import 'package:core_utils/core_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:wonzy_core_utils/core_utils.dart';
 
 void main() {
   runApp(const CoreUtilsExampleApp());

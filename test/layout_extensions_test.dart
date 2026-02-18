@@ -1,18 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:core_utils/core_utils.dart';
+import 'package:wonzy_core_utils/core_utils.dart';
 
 void main() {
   group('ColumnExtension on List<Widget>', () {
     testWidgets('.column() creates a Column', (tester) async {
       await tester.pumpWidget(
         MaterialApp(
-          home: Scaffold(
-            body: [
-              const Text('A'),
-              const Text('B'),
-            ].column(),
-          ),
+          home: Scaffold(body: [const Text('A'), const Text('B')].column()),
         ),
       );
 
@@ -44,12 +39,7 @@ void main() {
     testWidgets('.row() creates a Row', (tester) async {
       await tester.pumpWidget(
         MaterialApp(
-          home: Scaffold(
-            body: [
-              const Text('X'),
-              const Text('Y'),
-            ].row(),
-          ),
+          home: Scaffold(body: [const Text('X'), const Text('Y')].row()),
         ),
       );
 
@@ -60,13 +50,13 @@ void main() {
   });
 
   group('Column/Row Axis Extensions', () {
-    testWidgets('Column.crossCenter sets CrossAxisAlignment.center', (tester) async {
+    testWidgets('Column.crossCenter sets CrossAxisAlignment.center', (
+      tester,
+    ) async {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
-            body: Column(
-              children: const [Text('Test')],
-            ).crossCenter,
+            body: Column(children: const [Text('Test')]).crossCenter,
           ),
         ),
       );
@@ -78,11 +68,7 @@ void main() {
     testWidgets('Row.mainEnd sets MainAxisAlignment.end', (tester) async {
       await tester.pumpWidget(
         MaterialApp(
-          home: Scaffold(
-            body: Row(
-              children: const [Text('Test')],
-            ).mainEnd,
-          ),
+          home: Scaffold(body: Row(children: const [Text('Test')]).mainEnd),
         ),
       );
 

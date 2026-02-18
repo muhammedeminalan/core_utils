@@ -1,5 +1,6 @@
-# core_utils
+# wonzy_core_utils
 
+[![pub package](https://img.shields.io/pub/v/wonzy_core_utils.svg)](https://pub.dev/packages/wonzy_core_utils)
 [![CI](https://github.com/muhammedeminalan/core_utils/actions/workflows/ci.yml/badge.svg)](https://github.com/muhammedeminalan/core_utils/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Flutter](https://img.shields.io/badge/Flutter-%3E%3D3.29.0-02569B?logo=flutter)](https://flutter.dev)
@@ -8,7 +9,7 @@
 A comprehensive collection of **Flutter/Dart extensions** and **reusable widgets** that eliminate boilerplate and accelerate UI development. One import, dozens of superpowers.
 
 ```dart
-import 'package:core_utils/core_utils.dart';
+import 'package:wonzy_core_utils/core_utils.dart';
 ```
 
 ---
@@ -50,27 +51,33 @@ import 'package:core_utils/core_utils.dart';
 
 ## Installation
 
-### Option A — Git dependency
+### Option A — pub.dev (recommended)
 
 ```yaml
 dependencies:
-  core_utils:
+  wonzy_core_utils: ^0.1.0
+```
+
+### Option B — Git dependency
+
+```yaml
+dependencies:
+  wonzy_core_utils:
     git:
       url: https://github.com/muhammedeminalan/core_utils.git
       ref: v0.1.0
-```
-
-### Option B — pub.dev
-
-```yaml
-dependencies:
-  core_utils: ^0.1.0
 ```
 
 Then run:
 
 ```bash
 flutter pub get
+```
+
+Then import:
+
+```dart
+import 'package:wonzy_core_utils/core_utils.dart';
 ```
 
 ---
@@ -947,7 +954,7 @@ CostumBottomSheet(
 
 ## Full Export Tree
 
-All public API is exposed through a single barrel file — `import 'package:core_utils/core_utils.dart';`
+All public API is exposed through a single barrel file — `import 'package:wonzy_core_utils/core_utils.dart';`
 
 ```
 lib/core_utils.dart
