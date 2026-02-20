@@ -32,3 +32,4 @@ export 'src/widgets/app_bar/costum_app_bar.dart';
 export 'src/widgets/bottom_sheet/costum_bottom_sheet.dart';
 export 'src/widgets/buttons/costum_button.dart';
 export 'src/widgets/buttons/costum_icon_button.dart';
+export 'src/widgets/text_field/custom_text_field.dart';

@@ -42,6 +42,7 @@ import 'package:wonzy_core_utils/core_utils.dart';
   - [CostumButton](#costumbutton)
   - [CostumIconButton](#costumiconbutton)
   - [CostumBottomSheet](#costumbottomsheet)
+  - [CustomTextField](#customtextfield)
 - [Full Export Tree](#full-export-tree)
 - [Requirements](#requirements)
 - [Contributing](#contributing)
@@ -55,7 +56,7 @@ import 'package:wonzy_core_utils/core_utils.dart';
 
 ```yaml
 dependencies:
-  wonzy_core_utils: ^0.1.0
+  wonzy_core_utils: ^0.2.0
 ```
 
 ### Option B — Git dependency
@@ -65,7 +66,7 @@ dependencies:
   wonzy_core_utils:
     git:
       url: https://github.com/muhammedeminalan/core_utils.git
-      ref: v0.1.0
+      ref: v0.2.0
 ```
 
 Then run:
@@ -950,6 +951,321 @@ CostumBottomSheet(
 )
 ```
 
+### CustomTextField
+
+A **production-ready, type-driven smart text field** built on top of `FormBuilderTextField`. Select a `CustomFieldType` and the widget automatically configures keyboard type, autofill hints, obscure mode, and validation rules — all with Turkish error messages by default.
+
+> **Requires:** `flutter_form_builder` and `form_builder_validators` (already included as transitive dependencies).
+
+#### CustomFieldType Enum
+
+| Type            | Keyboard          | Autofill           | Obscure | Default Min Length |
+|-----------------|-------------------|--------------------|---------|-------------------|
+| `text`          | text              | —                  | false   | —                 |
+| `email`         | emailAddress      | email              | false   | —                 |
+| `phone`         | phone             | telephoneNumber    | false   | —                 |
+| `password`      | visiblePassword   | password           | true    | 6                 |
+| `number`        | number            | —                  | false   | —                 |
+| `studentNumber` | number            | —                  | false   | 6                 |
+
+#### Basic Usage
+
+```dart
+// Simple text field
+CustomTextField(
+  name: 'username',
+  label: 'Kullanıcı Adı',
+  hint: 'Kullanıcı adınızı girin',
+  required: true,
+)
+
+// Email field — auto keyboard, autofill & validation
+CustomTextField(
+  name: 'email',
+  type: CustomFieldType.email,
+  label: 'E-posta',
+  required: true,
+)
+
+// Password field — auto obscure, toggle icon, min 6 chars
+CustomTextField(
+  name: 'password',
+  type: CustomFieldType.password,
+  label: 'Şifre',
+  required: true,
+)
+
+// Phone field — numeric keyboard, phone autofill
+CustomTextField(
+  name: 'phone',
+  type: CustomFieldType.phone,
+  label: 'Telefon',
+  required: true,
+)
+
+// Number field — numeric keyboard & validation
+CustomTextField(
+  name: 'age',
+  type: CustomFieldType.number,
+  label: 'Yaş',
+)
+
+// Student number — numeric, min 6 chars
+CustomTextField(
+  name: 'student_no',
+  type: CustomFieldType.studentNumber,
+  label: 'Öğrenci No',
+  required: true,
+)
+```
+
+#### Password Toggle & Clear Button
+
+```dart
+// Password with show/hide toggle (enabled by default)
+CustomTextField(
+  name: 'password',
+  type: CustomFieldType.password,
+  label: 'Şifre',
+  showPasswordToggle: true,   // 👁 toggle icon (default: true)
+)
+
+// Text field with clear button (requires controller)
+final _controller = TextEditingController();
+
+CustomTextField(
+  name: 'search',
+  label: 'Ara',
+  controller: _controller,
+  showClearButton: true,       // ✕ clear icon when text is present
+)
+```
+
+#### Focus Management & Submit Flow
+
+```dart
+final _emailFocus = FocusNode();
+final _passwordFocus = FocusNode();
+
+// Email → Password auto-focus on submit
+CustomTextField(
+  name: 'email',
+  type: CustomFieldType.email,
+  label: 'E-posta',
+  focusNode: _emailFocus,
+  nextFocusNode: _passwordFocus,  // pressing "Next" moves focus here
+)
+
+CustomTextField(
+  name: 'password',
+  type: CustomFieldType.password,
+  label: 'Şifre',
+  focusNode: _passwordFocus,
+  onSubmitted: (_) => _submit(),  // pressing "Done" submits the form
+)
+```
+
+#### Validation & Custom Error Messages
+
+```dart
+// Required + custom error messages
+CustomTextField(
+  name: 'email',
+  type: CustomFieldType.email,
+  label: 'E-posta',
+  required: true,
+  requiredMessage: 'E-posta adresi gereklidir',
+  invalidEmailMessage: 'Lütfen geçerli bir e-posta girin',
+)
+
+// Min/max length validation
+CustomTextField(
+  name: 'bio',
+  label: 'Biyografi',
+  minLength: 10,
+  maxLengthValidator: 200,
+  maxLength: 200,              // shows counter
+  showCounter: true,
+  maxLines: 5,
+  minLengthMessage: 'En az 10 karakter yazmalısınız',
+  maxLengthMessage: 'En fazla 200 karakter olabilir',
+)
+
+// Custom validator
+CustomTextField(
+  name: 'code',
+  label: 'Davet Kodu',
+  customValidator: (value) {
+    if (value != null && !value.startsWith('INV-')) {
+      return 'Kod "INV-" ile başlamalıdır';
+    }
+    return null;
+  },
+)
+```
+
+#### Value Transform
+
+```dart
+// Trim & lowercase before saving
+CustomTextField(
+  name: 'email',
+  type: CustomFieldType.email,
+  label: 'E-posta',
+  transform: (value) => value?.trim().toLowerCase(),
+)
+```
+
+#### Decoration Customization
+
+```dart
+// Custom borders & padding
+CustomTextField(
+  name: 'note',
+  label: 'Not',
+  contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+  border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+  focusedBorder: OutlineInputBorder(
+    borderRadius: BorderRadius.circular(12),
+    borderSide: BorderSide(color: Colors.indigo, width: 2),
+  ),
+  style: TextStyle(fontSize: 16),
+  labelStyle: TextStyle(color: Colors.grey),
+)
+
+// Full decoration override
+CustomTextField(
+  name: 'custom',
+  decoration: InputDecoration(
+    labelText: 'Tam Özel',
+    filled: true,
+    fillColor: Colors.grey.shade100,
+    border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
+  ),
+)
+```
+
+#### Icons
+
+```dart
+// Prefix & suffix icons
+CustomTextField(
+  name: 'email',
+  type: CustomFieldType.email,
+  label: 'E-posta',
+  prefixIcon: Icon(Icons.email_outlined),
+  suffixIcon: Icon(Icons.check_circle, color: Colors.green),
+)
+```
+
+#### Full Form Example
+
+```dart
+final _formKey = GlobalKey<FormBuilderState>();
+final _passwordFocus = FocusNode();
+final _searchController = TextEditingController();
+
+FormBuilder(
+  key: _formKey,
+  child: Column(
+    children: [
+      CustomTextField(
+        name: 'email',
+        type: CustomFieldType.email,
+        label: 'E-posta',
+        prefixIcon: Icon(Icons.email_outlined),
+        required: true,
+        nextFocusNode: _passwordFocus,
+        transform: (v) => v?.trim().toLowerCase(),
+      ),
+      SizedBox(height: 16),
+      CustomTextField(
+        name: 'password',
+        type: CustomFieldType.password,
+        label: 'Şifre',
+        prefixIcon: Icon(Icons.lock_outline),
+        required: true,
+        focusNode: _passwordFocus,
+        minLength: 8,
+      ),
+      SizedBox(height: 16),
+      CustomTextField(
+        name: 'phone',
+        type: CustomFieldType.phone,
+        label: 'Telefon',
+        prefixIcon: Icon(Icons.phone_outlined),
+      ),
+      SizedBox(height: 24),
+      ElevatedButton(
+        onPressed: () {
+          if (_formKey.currentState?.saveAndValidate() ?? false) {
+            final data = _formKey.currentState!.value;
+            print(data); // {email: ..., password: ..., phone: ...}
+          }
+        },
+        child: Text('Giriş Yap'),
+      ),
+    ],
+  ),
+)
+```
+
+#### All Parameters
+
+| Parameter             | Type                          | Default                        | Description                                      |
+|-----------------------|-------------------------------|--------------------------------|--------------------------------------------------|
+| `name` *             | `String`                      | —                              | FormBuilder field name (required)                |
+| `type`                | `CustomFieldType`             | `.text`                        | Field type — drives defaults                     |
+| `label`               | `String?`                     | `null`                         | Label text                                       |
+| `hint`                | `String?`                     | `null`                         | Hint text                                        |
+| `helperText`          | `String?`                     | `null`                         | Helper text below the field                      |
+| `initialValue`        | `String?`                     | `null`                         | Initial value                                    |
+| `controller`          | `TextEditingController?`      | `null`                         | External text controller                         |
+| `focusNode`           | `FocusNode?`                  | `null`                         | External focus node                              |
+| `nextFocusNode`       | `FocusNode?`                  | `null`                         | Focus moves here on submit                       |
+| `enabled`             | `bool`                        | `true`                         | Whether the field is enabled                     |
+| `readOnly`            | `bool`                        | `false`                        | Read-only mode                                   |
+| `autofocus`           | `bool`                        | `false`                        | Auto-focus on build                              |
+| `obscureText`         | `bool?`                       | `null` (type default)          | Obscure text override                            |
+| `enableSuggestions`   | `bool`                        | `true`                         | Keyboard suggestions                             |
+| `autocorrect`         | `bool`                        | `true`                         | Auto-correct                                     |
+| `maxLength`           | `int?`                        | `null`                         | Max character count (with counter)               |
+| `maxLines`            | `int`                         | `1`                            | Max lines                                        |
+| `minLines`            | `int?`                        | `null`                         | Min lines                                        |
+| `keyboardType`        | `TextInputType?`              | `null` (type default)          | Keyboard type override                           |
+| `textInputAction`     | `TextInputAction?`            | `null` (auto: next/done)       | Keyboard action button                           |
+| `inputFormatters`     | `List<TextInputFormatter>?`   | `null`                         | Input formatters                                 |
+| `autofillHints`       | `Iterable<String>?`           | `null` (type default)          | Autofill hints override                          |
+| `showCounter`         | `bool`                        | `false`                        | Show character counter                           |
+| `showClearButton`     | `bool`                        | `false`                        | Show clear (×) icon (needs controller)           |
+| `showPasswordToggle`  | `bool`                        | `true`                         | Show password toggle (password type only)        |
+| `prefixIcon`          | `Widget?`                     | `null`                         | Leading icon                                     |
+| `suffixIcon`          | `Widget?`                     | `null`                         | Trailing icon (combined with toggle/clear)       |
+| `onTap`               | `VoidCallback?`               | `null`                         | On tap callback                                  |
+| `onChanged`           | `ValueChanged<String?>?`      | `null`                         | On change callback                               |
+| `onSubmitted`         | `ValueChanged<String?>?`      | `null`                         | On submit callback                               |
+| `transform`           | `String? Function(String?)?`  | `null`                         | Value transformer before save                    |
+| `autovalidateMode`    | `AutovalidateMode`            | `.onUserInteraction`           | Validation trigger mode                          |
+| `required`            | `bool`                        | `false`                        | Required field rule                              |
+| `minLength`           | `int?`                        | `null` (type default)          | Min length validation                            |
+| `maxLengthValidator`  | `int?`                        | `null`                         | Max length validation                            |
+| `customValidator`     | `FormFieldValidator<String>?` | `null`                         | Custom validator (appended last)                 |
+| `requiredMessage`     | `String?`                     | `'Bu alan zorunludur'`         | Required error override                          |
+| `invalidEmailMessage` | `String?`                     | `'Geçerli bir e-posta...'`    | Email error override                             |
+| `invalidPhoneMessage` | `String?`                     | `'Geçerli bir telefon...'`    | Phone error override                             |
+| `minLengthMessage`    | `String?`                     | `'En az N karakter...'`       | Min length error override                        |
+| `maxLengthMessage`    | `String?`                     | `'En fazla N karakter...'`    | Max length error override                        |
+| `numericMessage`      | `String?`                     | `'Sadece rakam girin'`        | Numeric error override                           |
+| `decoration`          | `InputDecoration?`            | `null`                         | Full decoration override                         |
+| `contentPadding`      | `EdgeInsetsGeometry?`         | `null`                         | Content padding                                  |
+| `border`              | `InputBorder?`                | `null`                         | Default border                                   |
+| `enabledBorder`       | `InputBorder?`                | `null`                         | Enabled border                                   |
+| `focusedBorder`       | `InputBorder?`                | `null`                         | Focused border                                   |
+| `errorBorder`         | `InputBorder?`                | `null`                         | Error border                                     |
+| `style`               | `TextStyle?`                  | `null`                         | Field text style                                 |
+| `labelStyle`          | `TextStyle?`                  | `null`                         | Label style                                      |
+| `hintStyle`           | `TextStyle?`                  | `null`                         | Hint style                                       |
+
 ---
 
 ## Full Export Tree
@@ -1036,7 +1352,8 @@ lib/core_utils.dart
     ├── CostumAppBar         (PreferredSizeWidget)
     ├── CostumBottomSheet    (widget + static show method)
     ├── CostumButton         (general purpose button)
-    └── CostumIconButton     (circular icon button with badge)
+    ├── CostumIconButton     (circular icon button with badge)
+    └── CustomTextField      (type-driven smart text field)
 ```
 
 ---

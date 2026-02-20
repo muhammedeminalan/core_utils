@@ -1,6 +1,6 @@
 name: wonzy_core_utils
 description: "A collection of Flutter/Dart extensions and reusable widgets for rapid UI development. Context helpers, navigation shortcuts, text builders, layout extensions, and customizable widgets."
-version: 0.1.0
+version: 0.2.0
 homepage: https://github.com/muhammedeminalan/core_utils
 repository: https://github.com/muhammedeminalan/core_utils
 issue_tracker: https://github.com/muhammedeminalan/core_utils/issues
@@ -17,6 +17,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  # ──────────── Form ────────────
+  flutter_form_builder: ^10.3.0+2
+  form_builder_validators: ^11.3.0
 
 dev_dependencies:
   flutter_test:

@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.0] - 2025-02-20
+
+### Added
+
+- **CustomTextField** — Production-ready, type-driven smart text field built on `FormBuilderTextField`.
+  - `CustomFieldType` enum (`text`, `email`, `phone`, `password`, `number`, `studentNumber`) with automatic keyboard, autofill, obscure, and validation defaults.
+  - Password show/hide toggle icon.
+  - Clear (×) button support (with controller).
+  - `nextFocusNode` for automatic focus transition on submit.
+  - `valueTransformer` for pre-save value transformation (trim, lowercase, etc.).
+  - Turkish error messages by default; all overridable.
+  - Full `InputDecoration` customization support.
+  - Custom validator composition via `FormBuilderValidators.compose`.
+
+### Changed
+
+- Moved `flutter_form_builder` and `form_builder_validators` from `dev_dependencies` to `dependencies` (required by `CustomTextField`).
+
 ## [0.1.0] - 2025-02-18
 
 ### Added
