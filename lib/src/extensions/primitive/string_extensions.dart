@@ -23,14 +23,14 @@ extension StringExtensions on String {
   }
 
   String toUsername() {
-    String trimmed = trim(); // boşlukları temizle
+    final String trimmed = trim(); // boşlukları temizle
     if (trimmed.isEmpty) return '';
     if (trimmed.startsWith('@')) return trimmed;
     return '@$trimmed';
   }
 
   String toGmail() {
-    String trimmed = trim();
+    final String trimmed = trim();
 
     if (trimmed.isEmpty) return '';
 

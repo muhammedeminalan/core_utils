@@ -56,7 +56,7 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
-            body: Column(children: const [Text('Test')]).crossCenter,
+            body: const Column(children: [Text('Test')]).crossCenter,
           ),
         ),
       );
@@ -68,7 +68,7 @@ void main() {
     testWidgets('Row.mainEnd sets MainAxisAlignment.end', (tester) async {
       await tester.pumpWidget(
         MaterialApp(
-          home: Scaffold(body: Row(children: const [Text('Test')]).mainEnd),
+          home: Scaffold(body: const Row(children: [Text('Test')]).mainEnd),
         ),
       );
 

@@ -46,7 +46,7 @@ extension ImageExtensions on Image {
     double? radius,
     BoxShape shape = BoxShape.rectangle,
   }) {
-    return Container(
+    return DecoratedBox(
       decoration: BoxDecoration(
         border: Border.all(color: color, width: width),
         borderRadius: shape == BoxShape.rectangle && radius != null
@@ -101,7 +101,7 @@ extension ImageExtensions on Image {
     double spreadRadius = 0,
     double? borderRadius,
   }) {
-    return Container(
+    return DecoratedBox(
       decoration: BoxDecoration(
         borderRadius: borderRadius != null
             ? BorderRadius.circular(borderRadius)

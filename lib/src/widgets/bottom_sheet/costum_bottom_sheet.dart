@@ -851,7 +851,7 @@ class CostumBottomSheet extends StatelessWidget {
     );
 
     // ── Container Dekorasyon ──
-    Widget sheet = Container(
+    final Widget sheet = Container(
       height: height,
       width: width,
       padding: padding,
