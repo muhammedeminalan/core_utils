@@ -1,26 +1,22 @@
-// lib/core/extensions/log_extensions.dart
+// lib/src/extensions/utility/log_extensions.dart
 import 'dart:developer';
 
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 
 extension LogExtensions on String {
-  /// Normal debug print
   void debugLog() {
-    debugPrint(this);
+    if (kDebugMode) debugPrint(this);
   }
 
-  /// Info seviyesi log, Android Studio’da sarı renk
   void infoLog({String name = 'INFO'}) {
-    log(this, name: name, level: 800); // 800 = info
+    if (kDebugMode) log(this, name: name, level: 800);
   }
 
-  /// Warning seviyesi log, turuncu renk
   void warningLog({String name = 'WARNING'}) {
-    log(this, name: name, level: 900); // 900 = warning
+    if (kDebugMode) log(this, name: name, level: 900);
   }
 
-  /// Error seviyesi log, kırmızı renk
   void errorLog({String name = 'ERROR'}) {
-    log(this, name: name, level: 1000); // 1000 = error
+    if (kDebugMode) log(this, name: name, level: 1000);
   }
 }

@@ -14,10 +14,13 @@ extension ContextExtension on BuildContext {
   double screenHeight(double size) => screenSize.height * size;
 
   /// Ekran genişliğinin oranı
-  double scrennWidth(double size) => screenSize.width * size;
+  double screenWidth(double size) => screenSize.width * size;
 
-  /// Boşluklar
-  Divider divider({Color? color}) => Divider(color: color);
+  /// Ekran genişliğinin oranı
+  ///
+  /// @deprecated [screenWidth] kullanın.
+  @Deprecated('Use screenWidth instead. This was a typo.')
+  double scrennWidth(double size) => screenWidth(size);
 
   // ── Theme ──
 
@@ -42,25 +45,26 @@ extension ContextExtension on BuildContext {
 
   TextTheme get textTheme => theme.textTheme;
 
-  TextStyle get displayLarge => textTheme.displayLarge!;
-  TextStyle get displayMedium => textTheme.displayMedium!;
-  TextStyle get displaySmall => textTheme.displaySmall!;
+  /// Material 3'te TextTheme alanları nullable olabilir; `TextStyle()` fallback kullanılır.
+  TextStyle get displayLarge => textTheme.displayLarge ?? const TextStyle();
+  TextStyle get displayMedium => textTheme.displayMedium ?? const TextStyle();
+  TextStyle get displaySmall => textTheme.displaySmall ?? const TextStyle();
 
-  TextStyle get headlineLarge => textTheme.headlineLarge!;
-  TextStyle get headlineMedium => textTheme.headlineMedium!;
-  TextStyle get headlineSmall => textTheme.headlineSmall!;
+  TextStyle get headlineLarge => textTheme.headlineLarge ?? const TextStyle();
+  TextStyle get headlineMedium => textTheme.headlineMedium ?? const TextStyle();
+  TextStyle get headlineSmall => textTheme.headlineSmall ?? const TextStyle();
 
-  TextStyle get titleLarge => textTheme.titleLarge!;
-  TextStyle get titleMedium => textTheme.titleMedium!;
-  TextStyle get titleSmall => textTheme.titleSmall!;
+  TextStyle get titleLarge => textTheme.titleLarge ?? const TextStyle();
+  TextStyle get titleMedium => textTheme.titleMedium ?? const TextStyle();
+  TextStyle get titleSmall => textTheme.titleSmall ?? const TextStyle();
 
-  TextStyle get bodyLarge => textTheme.bodyLarge!;
-  TextStyle get bodyMedium => textTheme.bodyMedium!;
-  TextStyle get bodySmall => textTheme.bodySmall!;
+  TextStyle get bodyLarge => textTheme.bodyLarge ?? const TextStyle();
+  TextStyle get bodyMedium => textTheme.bodyMedium ?? const TextStyle();
+  TextStyle get bodySmall => textTheme.bodySmall ?? const TextStyle();
 
-  TextStyle get labelLarge => textTheme.labelLarge!;
-  TextStyle get labelMedium => textTheme.labelMedium!;
-  TextStyle get labelSmall => textTheme.labelSmall!;
+  TextStyle get labelLarge => textTheme.labelLarge ?? const TextStyle();
+  TextStyle get labelMedium => textTheme.labelMedium ?? const TextStyle();
+  TextStyle get labelSmall => textTheme.labelSmall ?? const TextStyle();
 
   // ── Widget Theme Kısaltmaları ──
 

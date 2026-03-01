@@ -13,8 +13,8 @@ import 'package:flutter/material.dart';
 ///   backgroundColor: AppColors.primary,
 /// )
 /// ```
-class CostumButton extends StatelessWidget {
-  const CostumButton({
+class CustomButton extends StatelessWidget {
+  const CustomButton({
     super.key,
 
     // ── İçerik ──
@@ -488,9 +488,12 @@ class CostumButton extends StatelessWidget {
 
     // ── Tooltip ──
     if (tooltip != null) {
-      button = Tooltip(message: tooltip!, child: button);
+      button = Tooltip(message: tooltip, child: button);
     }
 
     return button;
   }
 }
+
+@Deprecated('Use CustomButton instead.')
+typedef CostumButton = CustomButton;

@@ -2,9 +2,8 @@
 ///
 /// Usage: `import 'package:wonzy_core_utils/wonzy_core_utils.dart';`
 ///
-/// Both import paths work:
-/// - `import 'package:wonzy_core_utils/wonzy_core_utils.dart';`
-/// - `import 'package:wonzy_core_utils/core_utils.dart';`
+/// **Deprecated path:** `import 'package:wonzy_core_utils/core_utils.dart';`
+/// still works for backward compatibility but `wonzy_core_utils.dart` is preferred.
 library;
 
 export 'core_utils.dart';

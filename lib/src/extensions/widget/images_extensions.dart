@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
@@ -581,7 +582,7 @@ class _FadeInImageState extends State<_FadeInImage>
     super.initState();
     _controller = AnimationController(vsync: this, duration: widget.duration);
     _animation = CurvedAnimation(parent: _controller, curve: widget.curve);
-    _controller.forward();
+    unawaited(_controller.forward());
   }
 
   @override

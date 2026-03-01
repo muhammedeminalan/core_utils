@@ -16,8 +16,8 @@ import 'package:flutter/material.dart';
 ///   child: FilterWidget(),
 /// );
 /// ```
-class CostumBottomSheet extends StatelessWidget {
-  const CostumBottomSheet({
+class CustomBottomSheet extends StatelessWidget {
+  const CustomBottomSheet({
     super.key,
 
     // ── İçerik ──
@@ -1034,7 +1034,7 @@ class CostumBottomSheet extends StatelessWidget {
     // ── Callback ──
     VoidCallback? onDismissed,
   }) {
-    final sheet = CostumBottomSheet(
+    final sheet = CustomBottomSheet(
       child: child,
       children: children,
       title: title,
@@ -1152,7 +1152,7 @@ class CostumBottomSheet extends StatelessWidget {
             snapSizes: snapSizes,
             shouldCloseOnMinExtent: shouldCloseOnMinExtent ?? true,
             builder: (_, controller) {
-              return CostumBottomSheet(
+              return CustomBottomSheet(
                 child: child,
                 children: children,
                 title: title,
@@ -1255,3 +1255,6 @@ class CostumBottomSheet extends StatelessWidget {
     ).whenComplete(() => onDismissed?.call());
   }
 }
+
+@Deprecated('Use CustomBottomSheet instead.')
+typedef CostumBottomSheet = CustomBottomSheet;

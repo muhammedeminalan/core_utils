@@ -1,7 +1,7 @@
-/// CampusHub Core Utils — Extensions & Reusable Widgets
+/// wonzy_core_utils — Extensions & Reusable Widgets
 ///
 /// Tüm extension'lar ve ortak widget'lar bu barrel dosyasından dışarı açılır.
-/// Kullanım: `import 'package:core_utils/core_utils.dart';`
+/// Kullanım: `import 'package:wonzy_core_utils/wonzy_core_utils.dart';`
 library;
 
 // ── Context Extensions ──

@@ -24,7 +24,14 @@ extension ContainerExtensions on Widget {
     BoxDecoration? boxDecoration;
 
     if (decoration != null) {
-      boxDecoration = decoration as BoxDecoration?;
+      // Güvenli tip kontrolü: BoxDecoration dışı Decoration subtype'ları (ör. ShapeDecoration)
+      // geçilirse TypeError fırlamaması için is-check kullanılır.
+      assert(
+        decoration is BoxDecoration,
+        'container() sadece BoxDecoration destekler. '
+        'Başka bir Decoration verildiyse doğrudan Container kullanın.',
+      );
+      boxDecoration = decoration is BoxDecoration ? decoration : null;
     } else if (color != null ||
         borderRadius != null ||
         gradient != null ||

@@ -1,7 +1,17 @@
+// ─────────────────────────────────────────────────────────────
+// Compile-time RegExp sabitleri — her çağrıda yeniden derlenmez.
+// ─────────────────────────────────────────────────────────────
+final RegExp _nonDigitRe = RegExp(r'\D');
+final RegExp _alphaRe = RegExp(r'^[a-zA-Z]+$');
+final RegExp _alphanumericRe = RegExp(r'^[a-zA-Z0-9]+$');
+final RegExp _hasDigitRe = RegExp(r'\d');
+final RegExp _hasLetterRe = RegExp(r'[a-zA-Z]');
+final RegExp _htmlTagRe = RegExp(r'<[^>]*>');
+
 extension StringExtensions on String {
   String toTurkishPhoneFormat() {
     // Sayıları temizle
-    String digits = replaceAll(RegExp(r'\D'), '');
+    String digits = replaceAll(_nonDigitRe, '');
 
     // Türkiye cep telefonu 10 hane (0 ile başlayan kısmı)
     if (digits.length > 10) {
@@ -48,10 +58,17 @@ extension StringExtensions on String {
     return this[0].toUpperCase() + substring(1);
   }
 
-  /// Tüm harfleri küçük yapar
+  /// Tüm harfleri küçük yapar.
+  ///
+  /// @deprecated Doğrudan [toLowerCase] kullanın — non-nullable String'de
+  /// "safe" wrapper gereksizdir.
+  @Deprecated('Use toLowerCase() directly.')
   String toLowerCaseSafe() => toLowerCase();
 
-  /// Tüm harfleri büyük yapar
+  /// Tüm harfleri büyük yapar.
+  ///
+  /// @deprecated Doğrudan [toUpperCase] kullanın.
+  @Deprecated('Use toUpperCase() directly.')
   String toUpperCaseSafe() => toUpperCase();
 
   /// Her kelimenin ilk harfini büyük yapar: "merhaba flutter" -> "Merhaba Flutter"
@@ -82,10 +99,17 @@ extension StringExtensions on String {
   /// Başındaki ve sonundaki boşlukları temizler
   String get trimmed => trim();
 
-  /// String boş mu kontrol eder
+  /// String boş mu kontrol eder.
+  ///
+  /// @deprecated Non-nullable String üzerinde `null` kontrolü anlamsızdır;
+  /// doğrudan [isEmpty] kullanın.
+  @Deprecated('Use isEmpty directly. String is non-nullable.')
   bool get isNullOrEmpty => isEmpty;
 
-  /// String boş değil mi kontrol eder
+  /// String boş değil mi kontrol eder.
+  ///
+  /// @deprecated Doğrudan [isNotEmpty] kullanın.
+  @Deprecated('Use isNotEmpty directly. String is non-nullable.')
   bool get isNotNullOrEmpty => isNotEmpty;
 
   /// Belirli bir uzunluktan sonra "..." ekler
@@ -105,16 +129,16 @@ extension StringExtensions on String {
   bool get isNumeric => double.tryParse(this) != null;
 
   /// String sadece harflerden mi oluşuyor
-  bool get isAlphabetic => RegExp(r'^[a-zA-Z]+$').hasMatch(this);
+  bool get isAlphabetic => _alphaRe.hasMatch(this);
 
   /// String sadece harf veya rakamlardan mı oluşuyor
-  bool get isAlphanumeric => RegExp(r'^[a-zA-Z0-9]+$').hasMatch(this);
+  bool get isAlphanumeric => _alphanumericRe.hasMatch(this);
 
   /// String içinde rakam var mı
-  bool get hasNumber => RegExp(r'\d').hasMatch(this);
+  bool get hasNumber => _hasDigitRe.hasMatch(this);
 
   /// String içinde harf var mı
-  bool get hasLetter => RegExp(r'[a-zA-Z]').hasMatch(this);
+  bool get hasLetter => _hasLetterRe.hasMatch(this);
 
   /// Başındaki karakterleri tekrarlayıp padding ekler
   String padLeftToLength(int length, [String char = ' ']) =>
@@ -129,12 +153,18 @@ extension StringExtensions on String {
       replaceAll(RegExp(from, caseSensitive: false), to);
 
   /// HTML taglerini temizler
-  String get stripHtml => replaceAll(RegExp(r'<[^>]*>'), '');
+  String get stripHtml => replaceAll(_htmlTagRe, '');
 
-  /// String'i listeye çevirir
+  /// String'i boşluklardan listeye çevirir.
+  ///
+  /// @deprecated `split(' ')` kullanın; bu wrapper YAGNI ihlalidir.
+  @Deprecated("Use split(' ') directly.")
   List<String> get splitToList => split(' ');
 
-  /// String uzunluğu (null değilse)
+  /// String uzunluğu.
+  ///
+  /// @deprecated Non-nullable String üzerinde gereksizdir; doğrudan [length] kullanın.
+  @Deprecated('Use length directly. String is non-nullable.')
   int get lengthSafe => length;
 
   /// String'in belirli bir index'i varsa döndürür, yoksa default

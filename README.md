@@ -38,10 +38,10 @@ import 'package:wonzy_core_utils/core_utils.dart';
 - [Route Transitions](#route-transitions)
 - [Log Extensions](#log-extensions)
 - [Reusable Widgets](#reusable-widgets)
-  - [CostumAppBar](#costumappbar)
-  - [CostumButton](#costumbutton)
-  - [CostumIconButton](#costumiconbutton)
-  - [CostumBottomSheet](#costumbottomsheet)
+  - [CustomAppBar](#customappbar)
+  - [CustomButton](#custombutton)
+  - [CustomIconButton](#customiconbutton)
+  - [CustomBottomSheet](#custombottomsheet)
   - [CustomTextField](#customtextfield)
 - [Full Export Tree](#full-export-tree)
 - [Requirements](#requirements)
@@ -93,7 +93,7 @@ context.screenSize          // MediaQuery size
 context.width               // screen width
 context.height              // screen height
 context.screenHeight(0.5)   // 50% of screen height
-context.scrennWidth(0.3)    // 30% of screen width
+context.screenWidth(0.3)    // 30% of screen width
 
 // ── Theme ──
 context.theme               // ThemeData
@@ -763,12 +763,12 @@ Debug logging shortcuts on `String`:
 
 ## Reusable Widgets
 
-### CostumAppBar
+### CustomAppBar
 
 A fully customizable `AppBar` that implements `PreferredSizeWidget`:
 
 ```dart
-CostumAppBar(
+CustomAppBar(
   // Title
   title: 'Home Page',
   titleWidget: CustomTitleWidget(),       // overrides title
@@ -788,8 +788,8 @@ CostumAppBar(
 
   // Actions
   actions: [
-    CostumIconButton(iconData: Icons.search, onPressed: () {}),
-    CostumIconButton(iconData: Icons.more_vert, onPressed: () {}),
+    CustomIconButton(iconData: Icons.search, onPressed: () {}),
+    CustomIconButton(iconData: Icons.more_vert, onPressed: () {}),
   ],
 
   // Appearance
@@ -810,12 +810,12 @@ CostumAppBar(
 )
 ```
 
-### CostumButton
+### CustomButton
 
 General purpose button with loading state, gradient, and full customization:
 
 ```dart
-CostumButton(
+CustomButton(
   text: 'Sign In',
   onPressed: () => signIn(),
   onLongPress: () => showOptions(),
@@ -860,12 +860,12 @@ CostumButton(
 )
 ```
 
-### CostumIconButton
+### CustomIconButton
 
 Circular icon button with badge support:
 
 ```dart
-CostumIconButton(
+CustomIconButton(
   iconData: Icons.notifications,
   onPressed: () => showNotifications(),
   size: 48,
@@ -890,13 +890,13 @@ CostumIconButton(
 )
 ```
 
-### CostumBottomSheet
+### CustomBottomSheet
 
 Feature-rich bottom sheet — use as widget or show directly:
 
 ```dart
 // ── Quick show ──
-CostumBottomSheet.show(
+CustomBottomSheet.show(
   context,
   title: 'Filter Options',
   subtitle: 'Select your preferences',
@@ -941,13 +941,13 @@ CostumBottomSheet.show(
 );
 
 // ── As widget (inside a builder) ──
-CostumBottomSheet(
+CustomBottomSheet(
   title: 'Options',
   children: [
     ListTile(title: Text('Option 1')),
     ListTile(title: Text('Option 2')),
   ],
-  footer: CostumButton(text: 'Done', onPressed: () {}),
+  footer: CustomButton(text: 'Done', onPressed: () {}),
 )
 ```
 
@@ -1349,10 +1349,10 @@ lib/core_utils.dart
 │       (.toImage, .toDecorationImage, .toCircleAvatar, .toInk)
 │
 └── Reusable Widgets
-    ├── CostumAppBar         (PreferredSizeWidget)
-    ├── CostumBottomSheet    (widget + static show method)
-    ├── CostumButton         (general purpose button)
-    ├── CostumIconButton     (circular icon button with badge)
+    ├── CustomAppBar         (PreferredSizeWidget)
+    ├── CustomBottomSheet    (widget + static show method)
+    ├── CustomButton         (general purpose button)
+    ├── CustomIconButton     (circular icon button with badge)
     └── CustomTextField      (type-driven smart text field)
 ```
 

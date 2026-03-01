@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:wonzy_core_utils/core_utils.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:wonzy_core_utils/wonzy_core_utils.dart';
 
 void main() {
   runApp(const CoreUtilsExampleApp());
@@ -27,15 +28,15 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // ── CostumAppBar ──
-      appBar: CostumAppBar(
+      // ── CustomAppBar ──
+      appBar: CustomAppBar(
         title: 'core_utils Demo',
         centerTitle: true,
         actions: [
-          CostumIconButton(
+          CustomIconButton(
             iconData: Icons.info_outline,
             onPressed: () {
-              CostumBottomSheet.show(
+              CustomBottomSheet.show(
                 context,
                 title: 'About',
                 child: const Text(
@@ -95,9 +96,33 @@ class HomePage extends StatelessWidget {
 
           16.h,
 
-          // ── CostumButton ──
+          // ── CustomTextField ──
+          _SectionTitle('CustomTextField'),
+          FormBuilder(
+            child: CustomTextField(
+              name: 'email',
+              type: CustomFieldType.email,
+              label: 'E-posta',
+              required: true,
+            ).paddingSymmetric(h: 0),
+          ).paddingSymmetric(h: 0),
+
+          16.h,
+
+          FormBuilder(
+            child: CustomTextField(
+              name: 'password',
+              type: CustomFieldType.password,
+              label: 'Şifre',
+              required: true,
+            ),
+          ),
+
+          32.h,
+
+          // ── CustomButton ──
           _SectionTitle('Reusable Widgets'),
-          CostumButton(
+          CustomButton(
             text: 'Press Me',
             onPressed: () => 'Button pressed!'.debugLog(),
             backgroundColor: Colors.indigo,

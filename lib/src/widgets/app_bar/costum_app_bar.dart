@@ -7,14 +7,14 @@ import 'package:flutter/services.dart';
 /// Tüm property'ler opsiyoneldir — yalnızca ihtiyaç duyulanlar verilir.
 ///
 /// ```dart
-/// CostumAppBar(
+/// CustomAppBar(
 ///   title: 'Ana Sayfa',
 ///   leadingIcon: Icons.menu,
-///   actions: [CostumIconButton(iconData: Icons.search, onPressed: () {})],
+///   actions: [CustomIconButton(iconData: Icons.search, onPressed: () {})],
 /// )
 /// ```
-class CostumAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const CostumAppBar({
+class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const CustomAppBar({
     super.key,
 
     // ── Başlık ──
@@ -451,3 +451,8 @@ class CostumAppBar extends StatelessWidget implements PreferredSizeWidget {
     return appBar;
   }
 }
+
+/// @deprecated [CustomAppBar] kullanin. 'Costum' yanlis yazilmis bir kelimeydi.
+// ignore: deprecated_member_use_from_same_package
+@Deprecated('Use CustomAppBar instead.')
+typedef CostumAppBar = CustomAppBar;

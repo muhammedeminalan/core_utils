@@ -14,8 +14,8 @@ import 'package:flutter/material.dart';
 ///   size: 48,
 /// )
 /// ```
-class CostumIconButton extends StatelessWidget {
-  const CostumIconButton({
+class CustomIconButton extends StatelessWidget {
+  const CustomIconButton({
     super.key,
 
     // ── İçerik ──
@@ -437,9 +437,12 @@ class CostumIconButton extends StatelessWidget {
 
     // ── Tooltip ──
     if (tooltip != null) {
-      button = Tooltip(message: tooltip!, child: button);
+      button = Tooltip(message: tooltip, child: button);
     }
 
     return button;
   }
 }
+
+@Deprecated('Use CustomIconButton instead.')
+typedef CostumIconButton = CustomIconButton;
