@@ -28,19 +28,21 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // ── CustomAppBar ──
-      appBar: CustomAppBar(
+      // ── Wonzy.appBar — yeni namespace API ──
+      appBar: Wonzy.appBar(
         title: 'core_utils Demo',
         centerTitle: true,
         actions: [
-          CustomIconButton(
+          // ── Wonzy.button.icon ──
+          Wonzy.button.icon(
             iconData: Icons.info_outline,
             onPressed: () {
-              CustomBottomSheet.show(
+              // ── Wonzy.bottomSheet.show ──
+              Wonzy.bottomSheet.show(
                 context,
-                title: 'About',
+                title: 'Hakkında',
                 child: const Text(
-                  'This app demonstrates the core_utils package extensions and widgets.',
+                  'Bu uygulama wonzy_core_utils paketinin extension ve widget\'larını gösterir.',
                 ),
               );
             },
@@ -52,9 +54,9 @@ class HomePage extends StatelessWidget {
           // ── Context Extensions ──
           _SectionTitle('Context Extensions'),
           Text(
-            'Screen: ${context.width.toStringAsFixed(0)} × ${context.height.toStringAsFixed(0)}',
+            'Ekran: ${context.width.toStringAsFixed(0)} × ${context.height.toStringAsFixed(0)}',
           ).paddingAll(8),
-          'Primary color'.text.bold
+          'Birincil renk'.text.bold
               .bodyLarge(context)
               .color(context.primaryColor),
 
@@ -62,13 +64,10 @@ class HomePage extends StatelessWidget {
           // ── String Extensions ──
           _SectionTitle('String Extensions'),
           Text(
-            "'hello world'.capitalize() → ${'hello world'.capitalize()}",
+            "'merhaba dunya'.capitalize() → ${'merhaba dunya'.capitalize()}",
           ).paddingAll(4),
           Text(
-            "'hello world'.toTitleCase() → ${'hello world'.toTitleCase()}",
-          ).paddingAll(4),
-          Text(
-            "'hello world'.toSnakeCase() → ${'hello world'.toSnakeCase()}",
+            "'merhaba dunya'.toTitleCase() → ${'merhaba dunya'.toTitleCase()}",
           ).paddingAll(4),
           Text(
             "'abc123'.isAlphanumeric → ${'abc123'.isAlphanumeric}",
@@ -78,7 +77,7 @@ class HomePage extends StatelessWidget {
 
           // ── Text Builder ──
           _SectionTitle('Text Builder'),
-          'Chainable Text API'.text.bold
+          'Zincirlenebilir Metin API'.text.bold
               .titleMedium(context)
               .color(Colors.indigo),
 
@@ -86,7 +85,7 @@ class HomePage extends StatelessWidget {
 
           // ── Widget Extensions ──
           _SectionTitle('Widget Extensions'),
-          const Text('Rounded Box')
+          const Text('Yuvarlak Kutu')
               .roundedBox(
                 radius: 12,
                 backgroundColor: Colors.indigo.shade50,
@@ -96,10 +95,10 @@ class HomePage extends StatelessWidget {
 
           16.h,
 
-          // ── CustomTextField ──
-          _SectionTitle('CustomTextField'),
+          // ── Wonzy.textField — yeni namespace API ──
+          _SectionTitle('Wonzy.textField'),
           FormBuilder(
-            child: CustomTextField(
+            child: Wonzy.textField(
               name: 'email',
               type: CustomFieldType.email,
               label: 'E-posta',
@@ -110,7 +109,7 @@ class HomePage extends StatelessWidget {
           16.h,
 
           FormBuilder(
-            child: CustomTextField(
+            child: Wonzy.textField(
               name: 'password',
               type: CustomFieldType.password,
               label: 'Şifre',
@@ -120,15 +119,17 @@ class HomePage extends StatelessWidget {
 
           32.h,
 
-          // ── CustomButton ──
-          _SectionTitle('Reusable Widgets'),
-          CustomButton(
-            text: 'Press Me',
-            onPressed: () => 'Button pressed!'.debugLog(),
-            backgroundColor: Colors.indigo,
-            foregroundColor: Colors.white,
-            borderRadius: 12,
-          ).paddingSymmetric(h: 16),
+          // ── Wonzy.button.standard — yeni namespace API ──
+          _SectionTitle('Wonzy.button'),
+          Wonzy.button
+              .standard(
+                text: 'Bana Bas',
+                onPressed: () => 'Butona basıldı!'.debugLog(),
+                backgroundColor: Colors.indigo,
+                foregroundColor: Colors.white,
+                borderRadius: 12,
+              )
+              .paddingSymmetric(h: 16),
 
           32.h,
         ].column(crossAxisAlignment: CrossAxisAlignment.stretch),

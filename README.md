@@ -9,7 +9,7 @@
 A comprehensive collection of **Flutter/Dart extensions** and **reusable widgets** that eliminate boilerplate and accelerate UI development. One import, dozens of superpowers.
 
 ```dart
-import 'package:wonzy_core_utils/core_utils.dart';
+import 'package:wonzy_core_utils/wonzy_core_utils.dart';
 ```
 
 ---
@@ -37,12 +37,12 @@ import 'package:wonzy_core_utils/core_utils.dart';
 - [Navigation Extensions](#navigation-extensions)
 - [Route Transitions](#route-transitions)
 - [Log Extensions](#log-extensions)
-- [Reusable Widgets](#reusable-widgets)
-  - [CustomAppBar](#customappbar)
-  - [CustomButton](#custombutton)
-  - [CustomIconButton](#customiconbutton)
-  - [CustomBottomSheet](#custombottomsheet)
-  - [CustomTextField](#customtextfield)
+- [Wonzy Widget Namespace](#wonzy-widget-namespace)
+  - [Wonzy.appBar](#wonzyappbar)
+  - [Wonzy.button.standard](#wonzybuttonstandard)
+  - [Wonzy.button.icon](#wonzybuttonicon)
+  - [Wonzy.bottomSheet / Wonzy.bottomSheet.show](#wonzybottomsheet--wonzybottomsheetshow)
+  - [Wonzy.textField](#wonzytextfield)
 - [Full Export Tree](#full-export-tree)
 - [Requirements](#requirements)
 - [Contributing](#contributing)
@@ -56,7 +56,7 @@ import 'package:wonzy_core_utils/core_utils.dart';
 
 ```yaml
 dependencies:
-  wonzy_core_utils: ^0.2.0
+  wonzy_core_utils: ^2.0.0
 ```
 
 ### Option B — Git dependency
@@ -66,7 +66,7 @@ dependencies:
   wonzy_core_utils:
     git:
       url: https://github.com/muhammedeminalan/core_utils.git
-      ref: v0.2.0
+      ref: v2.0.0
 ```
 
 Then run:
@@ -78,7 +78,7 @@ flutter pub get
 Then import:
 
 ```dart
-import 'package:wonzy_core_utils/core_utils.dart';
+import 'package:wonzy_core_utils/wonzy_core_utils.dart';
 ```
 
 ---
@@ -761,111 +761,119 @@ Debug logging shortcuts on `String`:
 
 ---
 
-## Reusable Widgets
+## Wonzy Widget Namespace
 
-### CustomAppBar
-
-A fully customizable `AppBar` that implements `PreferredSizeWidget`:
+v2.0.0 itibarıyla tüm widget'lara `Wonzy` namespace'i üzerinden erişilir.
 
 ```dart
-CustomAppBar(
-  // Title
-  title: 'Home Page',
-  titleWidget: CustomTitleWidget(),       // overrides title
-  titleStyle: TextStyle(fontSize: 20),
-  titleColor: Colors.white,
-  titleFontSize: 18,
-  titleFontWeight: FontWeight.bold,
-  centerTitle: true,
+import 'package:wonzy_core_utils/wonzy_core_utils.dart';
+```
 
-  // Leading
-  leadingIcon: Icons.menu,
-  leadingIconColor: Colors.white,
-  leadingIconSize: 24,
-  onLeadingPressed: () => openDrawer(),
-  leading: CustomWidget(),                // overrides leadingIcon
-  automaticallyImplyLeading: true,
+### Wonzy.appBar
 
-  // Actions
-  actions: [
-    CustomIconButton(iconData: Icons.search, onPressed: () {}),
-    CustomIconButton(iconData: Icons.more_vert, onPressed: () {}),
-  ],
+`PreferredSizeWidget` döndürür — `Scaffold.appBar:` ile doğrudan uyumlu:
 
-  // Appearance
-  backgroundColor: Colors.indigo,
-  gradient: LinearGradient(colors: [Colors.indigo, Colors.purple]),
-  elevation: 4,
-  shadowColor: Colors.black26,
-  shape: RoundedRectangleBorder(
-    borderRadius: BorderRadius.vertical(bottom: Radius.circular(16)),
+```dart
+Scaffold(
+  appBar: Wonzy.appBar(
+    // Başlık
+    title: 'Ana Sayfa',
+    titleWidget: CustomTitleWidget(),       // title yerine geçer
+    titleStyle: TextStyle(fontSize: 20),
+    titleColor: Colors.white,
+    titleFontSize: 18,
+    titleFontWeight: FontWeight.bold,
+    centerTitle: true,
+
+    // Geri butonu
+    leadingIcon: Icons.menu,
+    leadingIconColor: Colors.white,
+    leadingIconSize: 24,
+    onLeadingPressed: () => openDrawer(),
+    leading: CustomWidget(),                // leadingIcon yerine geçer
+    automaticallyImplyLeading: true,
+
+    // Eylemler
+    actions: [
+      Wonzy.button.icon(iconData: Icons.search, onPressed: () {}),
+      Wonzy.button.icon(iconData: Icons.more_vert, onPressed: () {}),
+    ],
+
+    // Görünüm
+    backgroundColor: Colors.indigo,
+    gradient: LinearGradient(colors: [Colors.indigo, Colors.purple]),
+    elevation: 4,
+    shadowColor: Colors.black26,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(bottom: Radius.circular(16)),
+    ),
+    borderRadius: 16,                       // alt köşeler için kısayol
+
+    // Alt bileşen (TabBar vb.)
+    bottom: TabBar(tabs: [...]),
+
+    // Durum çubuğu
+    systemOverlayStyle: SystemUiOverlayStyle.light,
   ),
-  borderRadius: 16,                       // shortcut for bottom corners
-
-  // Bottom (TabBar etc.)
-  bottom: TabBar(tabs: [...]),
-
-  // Status bar
-  systemOverlayStyle: SystemUiOverlayStyle.light,
 )
 ```
 
-### CustomButton
+### Wonzy.button.standard
 
-General purpose button with loading state, gradient, and full customization:
+Yükleme durumu, gradient ve tam özelleştirme destekli genel amaçlı buton:
 
 ```dart
-CustomButton(
-  text: 'Sign In',
+Wonzy.button.standard(
+  text: 'Giriş Yap',
   onPressed: () => signIn(),
   onLongPress: () => showOptions(),
 
-  // Icon
+  // İkon
   iconData: Icons.login,
   iconSize: 20,
   iconColor: Colors.white,
   iconSpacing: 8,
 
-  // Size
+  // Boyut
   width: double.infinity,
   height: 48,
   padding: EdgeInsets.symmetric(horizontal: 24),
   borderRadius: 12,
 
-  // Colors
+  // Renkler
   backgroundColor: Colors.indigo,
   foregroundColor: Colors.white,
   disabledBackgroundColor: Colors.grey,
 
-  // Loading state
+  // Yükleme durumu
   isLoading: _isLoading,
   loadingColor: Colors.white,
   loadingSize: 20,
 
-  // Disabled state
+  // Devre dışı
   isDisabled: false,
 
   // Gradient
   gradient: LinearGradient(colors: [Colors.indigo, Colors.purple]),
 
-  // Border
+  // Kenarlık
   borderColor: Colors.indigoAccent,
   borderWidth: 2,
 
-  // Elevation
+  // Yükseklik (elevation)
   elevation: 4,
 
-  // Tooltip
-  tooltip: 'Sign in to your account',
+  // İpucu
+  tooltip: 'Hesabınıza giriş yapın',
 )
 ```
 
-### CustomIconButton
+### Wonzy.button.icon
 
-Circular icon button with badge support:
+Rozet desteği olan dairesel ikon butonu:
 
 ```dart
-CustomIconButton(
+Wonzy.button.icon(
   iconData: Icons.notifications,
   onPressed: () => showNotifications(),
   size: 48,
@@ -875,13 +883,13 @@ CustomIconButton(
   borderWidth: 2,
   elevation: 4,
 
-  // Badge
+  // Rozet
   badgeCount: 5,
   badgeColor: Colors.red,
   badgeTextColor: Colors.white,
   showBadge: true,
 
-  // Loading
+  // Yükleme / devre dışı
   isLoading: false,
   isDisabled: false,
 
@@ -890,68 +898,68 @@ CustomIconButton(
 )
 ```
 
-### CustomBottomSheet
+### Wonzy.bottomSheet / Wonzy.bottomSheet.show
 
-Feature-rich bottom sheet — use as widget or show directly:
+Özellik açısından zengin bottom sheet — widget olarak veya modal olarak kullanılabilir:
 
 ```dart
-// ── Quick show ──
-CustomBottomSheet.show(
+// ── Modal göster ──
+await Wonzy.bottomSheet.show(
   context,
-  title: 'Filter Options',
-  subtitle: 'Select your preferences',
+  title: 'Filtre Seçenekleri',
+  subtitle: 'Tercihlerinizi seçin',
   child: FilterWidget(),
 
-  // Handle
+  // Tutamaç
   showHandle: true,
   handleColor: Colors.grey,
 
-  // Close button
+  // Kapat butonu
   showCloseButton: true,
 
-  // Actions
-  primaryActionText: 'Apply',
+  // Eylemler
+  primaryActionText: 'Uygula',
   onPrimaryAction: () => applyFilter(),
-  secondaryActionText: 'Reset',
+  secondaryActionText: 'Sıfırla',
   onSecondaryAction: () => resetFilter(),
 
-  // Appearance
+  // Görünüm
   backgroundColor: Colors.white,
   borderRadius: 20,
   elevation: 8,
 
-  // Size
-  maxHeight: 0.8,  // 80% of screen
+  // Boyut
+  maxHeight: 0.8,  // ekranın %80'i
   padding: EdgeInsets.all(16),
 
-  // Behavior
+  // Davranış
   isDismissible: true,
   enableDrag: true,
   isDraggable: true,
   useSafeArea: true,
 
-  // Draggable options
+  // Sürüklenebilir seçenekler
   initialChildSize: 0.5,
   minChildSize: 0.25,
   maxChildSize: 0.9,
   snap: true,
 
-  // Scroll
+  // Kaydırma
   isScrollable: true,
 );
 
-// ── As widget (inside a builder) ──
-CustomBottomSheet(
-  title: 'Options',
+// ── Widget olarak (builder içinde) ──
+Wonzy.bottomSheet(
+  title: 'Seçenekler',
   children: [
-    ListTile(title: Text('Option 1')),
-    ListTile(title: Text('Option 2')),
+    ListTile(title: Text('Seçenek 1')),
+    ListTile(title: Text('Seçenek 2')),
   ],
-  footer: CustomButton(text: 'Done', onPressed: () {}),
+  footer: Wonzy.button.standard(text: 'Tamam', onPressed: () {}),
 )
 ```
 
-### CustomTextField
+### Wonzy.textField
 
 A **production-ready, type-driven smart text field** built on top of `FormBuilderTextField`. Select a `CustomFieldType` and the widget automatically configures keyboard type, autofill hints, obscure mode, and validation rules — all with Turkish error messages by default.
 
@@ -968,50 +976,50 @@ A **production-ready, type-driven smart text field** built on top of `FormBuilde
 | `number`        | number            | —                  | false   | —                 |
 | `studentNumber` | number            | —                  | false   | 6                 |
 
-#### Basic Usage
+#### Temel Kullanım
 
 ```dart
-// Simple text field
-CustomTextField(
+// Basit metin alanı
+Wonzy.textField(
   name: 'username',
   label: 'Kullanıcı Adı',
   hint: 'Kullanıcı adınızı girin',
   required: true,
 )
 
-// Email field — auto keyboard, autofill & validation
-CustomTextField(
+// E-posta — otomatik klavye, otomatik doldurma ve doğrulama
+Wonzy.textField(
   name: 'email',
   type: CustomFieldType.email,
   label: 'E-posta',
   required: true,
 )
 
-// Password field — auto obscure, toggle icon, min 6 chars
-CustomTextField(
+// Şifre — gizleme, göster/gizle ikonu, min 6 karakter
+Wonzy.textField(
   name: 'password',
   type: CustomFieldType.password,
   label: 'Şifre',
   required: true,
 )
 
-// Phone field — numeric keyboard, phone autofill
-CustomTextField(
+// Telefon — sayısal klavye, telefon otodoldurma
+Wonzy.textField(
   name: 'phone',
   type: CustomFieldType.phone,
   label: 'Telefon',
   required: true,
 )
 
-// Number field — numeric keyboard & validation
-CustomTextField(
+// Sayı — sayısal klavye ve doğrulama
+Wonzy.textField(
   name: 'age',
   type: CustomFieldType.number,
   label: 'Yaş',
 )
 
-// Student number — numeric, min 6 chars
-CustomTextField(
+// Öğrenci numarası — sayısal, min 6 karakter
+Wonzy.textField(
   name: 'student_no',
   type: CustomFieldType.studentNumber,
   label: 'Öğrenci No',
@@ -1019,57 +1027,56 @@ CustomTextField(
 )
 ```
 
-#### Password Toggle & Clear Button
+#### Şifre Göster/Gizle & Temizle Butonu
 
 ```dart
-// Password with show/hide toggle (enabled by default)
-CustomTextField(
+// Şifre alanı (göster/gizle varsayılan olarak etkin)
+Wonzy.textField(
   name: 'password',
   type: CustomFieldType.password,
   label: 'Şifre',
-  showPasswordToggle: true,   // 👁 toggle icon (default: true)
+  showPasswordToggle: true,   // 👁 geçiş ikonu (varsayılan: true)
 )
 
-// Text field with clear button (requires controller)
+// Temizle butonu (controller gerektirir)
 final _controller = TextEditingController();
 
-CustomTextField(
+Wonzy.textField(
   name: 'search',
   label: 'Ara',
   controller: _controller,
-  showClearButton: true,       // ✕ clear icon when text is present
+  showClearButton: true,       // ✕ metin varken temizleme ikonu
 )
 ```
 
-#### Focus Management & Submit Flow
+#### Odak Yönetimi & Gönderim Akışı
 
 ```dart
 final _emailFocus = FocusNode();
 final _passwordFocus = FocusNode();
 
-// Email → Password auto-focus on submit
-CustomTextField(
+// E-posta → Şifre otomatik odaklanma
+Wonzy.textField(
   name: 'email',
   type: CustomFieldType.email,
   label: 'E-posta',
   focusNode: _emailFocus,
-  nextFocusNode: _passwordFocus,  // pressing "Next" moves focus here
+  nextFocusNode: _passwordFocus,  // "İleri" bas → odak buraya geçer
 )
 
-CustomTextField(
+Wonzy.textField(
   name: 'password',
   type: CustomFieldType.password,
   label: 'Şifre',
   focusNode: _passwordFocus,
-  onSubmitted: (_) => _submit(),  // pressing "Done" submits the form
+  onSubmitted: (_) => _submit(),  // "Tamam" bas → formu gönder
 )
 ```
 
-#### Validation & Custom Error Messages
+#### Doğrulama & Özel Hata Mesajları
 
 ```dart
-// Required + custom error messages
-CustomTextField(
+Wonzy.textField(
   name: 'email',
   type: CustomFieldType.email,
   label: 'E-posta',
@@ -1078,21 +1085,21 @@ CustomTextField(
   invalidEmailMessage: 'Lütfen geçerli bir e-posta girin',
 )
 
-// Min/max length validation
-CustomTextField(
+// Min/max uzunluk doğrulaması
+Wonzy.textField(
   name: 'bio',
   label: 'Biyografi',
   minLength: 10,
   maxLengthValidator: 200,
-  maxLength: 200,              // shows counter
+  maxLength: 200,
   showCounter: true,
   maxLines: 5,
   minLengthMessage: 'En az 10 karakter yazmalısınız',
   maxLengthMessage: 'En fazla 200 karakter olabilir',
 )
 
-// Custom validator
-CustomTextField(
+// Özel doğrulayıcı
+Wonzy.textField(
   name: 'code',
   label: 'Davet Kodu',
   customValidator: (value) {
@@ -1104,11 +1111,10 @@ CustomTextField(
 )
 ```
 
-#### Value Transform
+#### Değer Dönüşümü
 
 ```dart
-// Trim & lowercase before saving
-CustomTextField(
+Wonzy.textField(
   name: 'email',
   type: CustomFieldType.email,
   label: 'E-posta',
@@ -1116,11 +1122,10 @@ CustomTextField(
 )
 ```
 
-#### Decoration Customization
+#### Görünüm Özelleştirme
 
 ```dart
-// Custom borders & padding
-CustomTextField(
+Wonzy.textField(
   name: 'note',
   label: 'Not',
   contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -1133,8 +1138,8 @@ CustomTextField(
   labelStyle: TextStyle(color: Colors.grey),
 )
 
-// Full decoration override
-CustomTextField(
+// Tam decoration geçersizleştirme
+Wonzy.textField(
   name: 'custom',
   decoration: InputDecoration(
     labelText: 'Tam Özel',
@@ -1145,11 +1150,10 @@ CustomTextField(
 )
 ```
 
-#### Icons
+#### İkonlar
 
 ```dart
-// Prefix & suffix icons
-CustomTextField(
+Wonzy.textField(
   name: 'email',
   type: CustomFieldType.email,
   label: 'E-posta',
@@ -1158,7 +1162,7 @@ CustomTextField(
 )
 ```
 
-#### Full Form Example
+#### Tam Form Örneği
 
 ```dart
 final _formKey = GlobalKey<FormBuilderState>();
@@ -1169,7 +1173,7 @@ FormBuilder(
   key: _formKey,
   child: Column(
     children: [
-      CustomTextField(
+      Wonzy.textField(
         name: 'email',
         type: CustomFieldType.email,
         label: 'E-posta',
@@ -1179,7 +1183,7 @@ FormBuilder(
         transform: (v) => v?.trim().toLowerCase(),
       ),
       SizedBox(height: 16),
-      CustomTextField(
+      Wonzy.textField(
         name: 'password',
         type: CustomFieldType.password,
         label: 'Şifre',
@@ -1189,14 +1193,16 @@ FormBuilder(
         minLength: 8,
       ),
       SizedBox(height: 16),
-      CustomTextField(
+      Wonzy.textField(
         name: 'phone',
         type: CustomFieldType.phone,
         label: 'Telefon',
         prefixIcon: Icon(Icons.phone_outlined),
       ),
       SizedBox(height: 24),
-      ElevatedButton(
+      Wonzy.button.standard(
+        text: 'Giriş Yap',
+        width: double.infinity,
         onPressed: () {
           if (_formKey.currentState?.saveAndValidate() ?? false) {
             final data = _formKey.currentState!.value;
@@ -1270,90 +1276,97 @@ FormBuilder(
 
 ## Full Export Tree
 
-All public API is exposed through a single barrel file — `import 'package:wonzy_core_utils/core_utils.dart';`
+Tüm public API tek bir barrel dosyası üzerinden sunulur — `import 'package:wonzy_core_utils/wonzy_core_utils.dart';`
 
 ```
-lib/core_utils.dart
+lib/wonzy_core_utils.dart
 │
-├── Context Extensions
-│   └── ContextExtension on BuildContext
-│       (screenSize, width, height, theme, colorScheme, textTheme,
-│        primaryColor, secondaryColor, ..., appBarTheme, cardTheme, ...)
+├── lib/core_utils.dart  (Extension barrel)
+│   │
+│   ├── Context Extensions
+│   │   └── ContextExtension on BuildContext
+│   │       (screenSize, width, height, theme, colorScheme, textTheme,
+│   │        primaryColor, secondaryColor, ..., appBarTheme, cardTheme, ...)
+│   │
+│   ├── Layout Extensions
+│   │   ├── ColumnCrossAxis / ColumnMainAxis on Column
+│   │   │   (.crossStart, .crossCenter, .mainSpaceBetween, ...)
+│   │   ├── RowCrossAxis / RowMainAxis on Row
+│   │   │   (.crossStart, .mainEnd, .mainSpaceEvenly, ...)
+│   │   ├── ColumnExtension on List<Widget>
+│   │   │   (.column(spacing: ...))
+│   │   └── RowExtension on List<Widget>
+│   │       (.row(spacing: ...))
+│   │
+│   ├── Navigation Extensions
+│   │   ├── NavigatorExtensions on BuildContext
+│   │   │   (.pushPage, .pop, .pushReplacementPage, .pushAndRemoveUntilPage,
+│   │   │    .pushNamed, .pushReplacementNamed)
+│   │   └── RouteTransitions (static class)
+│   │       (.fadeIn, .slide, .slideFromTop, .slideFromBottom, .scale,
+│   │        .rotation, .size, .fadeScale, .fadeSlide, .fadeRotate,
+│   │        .scaleRotate, .flipX, .flipY, .zoomIn, .zoomOut,
+│   │        .bounceIn, .elasticIn, .slideScale)
+│   │
+│   ├── Primitive Extensions
+│   │   ├── SizeExtensions on num
+│   │   │   (.h, .w, .height, .width, .all, .horizontal, .vertical,
+│   │   │    .radius, .ms, .seconds)
+│   │   ├── StringExtensions on String
+│   │   │   (.capitalize, .toTitleCase, .toSnakeCase, .toKebabCase,
+│   │   │    .toCamelCase, .isNumeric, .isAlphabetic, .isAlphanumeric,
+│   │   │    .reversed, .ellipsis, .containsIgnoreCase, .stripHtml,
+│   │   │    .toBool, .toTurkishPhoneFormat, .toUsername, .toGmail, ...)
+│   │   └── TextBuilderExtension on String
+│   │       (.text → TextBuilder chainable API)
+│   │
+│   ├── Utility Extensions
+│   │   └── LogExtensions on String
+│   │       (.debugLog, .infoLog, .warningLog, .errorLog)
+│   │
+│   └── Widget Extensions
+│       ├── PaddingExtensions on Widget
+│       │   (.paddingAll, .paddingHorizontal, .paddingVertical,
+│       │    .paddingSymmetric, .paddingOnly, .padding,
+│       │    .marginAll, .marginHorizontal, .marginVertical, .marginOnly)
+│       ├── AlignmentExtensions on Widget
+│       │   (.center, .alignLeft, .alignRight, .alignTop, .alignBottom, .align)
+│       ├── ContainerExtensions on Widget
+│       │   (.container(...))
+│       ├── FlexExtensions on Widget
+│       │   (.expanded, .flexible)
+│       ├── SizeConstraintExtensions on Widget
+│       │   (.sized, .square, .expandedWidth, .expandedHeight, .constrained)
+│       ├── WidgetDecorationExtensions on Widget
+│       │   (.roundedBox, .withBackground, .withShadow, .asCard,
+│       │    .onTap, .onInkTap, .onLongPress, .withVisibility, .withOpacity,
+│       │    .rotated, .scaled, .translated, .withTooltip, .asHero,
+│       │    .withAspectRatio, .safeArea, .ignorePointer, .absorbPointer,
+│       │    .clipRect, .clipOval, .clipRounded, .asCircle, .withBorder)
+│       └── ImageExtensions on Image
+│           (.rounded, .circular, .bordered, .circleAvatar, .shadow,
+│            .colorFiltered, .grayscale, .sepia, .opacity, .blurred,
+│            .sized, .ratio, .gradientOverlay, .colorOverlay, .fadeIn)
 │
-├── Layout Extensions
-│   ├── ColumnCrossAxis / ColumnMainAxis on Column
-│   │   (.crossStart, .crossCenter, .mainSpaceBetween, ...)
-│   ├── RowCrossAxis / RowMainAxis on Row
-│   │   (.crossStart, .mainEnd, .mainSpaceEvenly, ...)
-│   ├── ColumnExtension on List<Widget>
-│   │   (.column(spacing: ...))
-│   └── RowExtension on List<Widget>
-│       (.row(spacing: ...))
+│       String → Image Extensions
+│       ├── StringImageExtensions on String
+│       │   (.asAssetImage, .asNetworkImage, .asSmartNetworkImage,
+│       │    .toAssetImageProvider, .toNetworkImageProvider,
+│       │    .asDecorationImage, .asNetworkDecorationImage)
+│       └── ImageProviderExtensions on ImageProvider
+│           (.toImage, .toDecorationImage, .toCircleAvatar, .toInk)
 │
-├── Navigation Extensions
-│   ├── NavigatorExtensions on BuildContext
-│   │   (.pushPage, .pop, .pushReplacementPage, .pushAndRemoveUntilPage,
-│   │    .pushNamed, .pushReplacementNamed)
-│   └── RouteTransitions (static class)
-│       (.fadeIn, .slide, .slideFromTop, .slideFromBottom, .scale,
-│        .rotation, .size, .fadeScale, .fadeSlide, .fadeRotate,
-│        .scaleRotate, .flipX, .flipY, .zoomIn, .zoomOut,
-│        .bounceIn, .elasticIn, .slideScale)
-│
-├── Primitive Extensions
-│   ├── SizeExtensions on num
-│   │   (.h, .w, .height, .width, .all, .horizontal, .vertical,
-│   │    .radius, .ms, .seconds)
-│   ├── StringExtensions on String
-│   │   (.capitalize, .toTitleCase, .toSnakeCase, .toKebabCase,
-│   │    .toCamelCase, .isNumeric, .isAlphabetic, .isAlphanumeric,
-│   │    .reversed, .ellipsis, .containsIgnoreCase, .stripHtml,
-│   │    .toBool, .toTurkishPhoneFormat, .toUsername, .toGmail, ...)
-│   └── TextBuilderExtension on String
-│       (.text → TextBuilder chainable API)
-│
-├── Utility Extensions
-│   └── LogExtensions on String
-│       (.debugLog, .infoLog, .warningLog, .errorLog)
-│
-├── Widget Extensions
-│   ├── PaddingExtensions on Widget
-│   │   (.paddingAll, .paddingHorizontal, .paddingVertical,
-│   │    .paddingSymmetric, .paddingOnly, .padding,
-│   │    .marginAll, .marginHorizontal, .marginVertical, .marginOnly)
-│   ├── AlignmentExtensions on Widget
-│   │   (.center, .alignLeft, .alignRight, .alignTop, .alignBottom, .align)
-│   ├── ContainerExtensions on Widget
-│   │   (.container(...))
-│   ├── FlexExtensions on Widget
-│   │   (.expanded, .flexible)
-│   ├── SizeConstraintExtensions on Widget
-│   │   (.sized, .square, .expandedWidth, .expandedHeight, .constrained)
-│   ├── WidgetDecorationExtensions on Widget
-│   │   (.roundedBox, .withBackground, .withShadow, .asCard,
-│   │    .onTap, .onInkTap, .onLongPress, .withVisibility, .withOpacity,
-│   │    .rotated, .scaled, .translated, .withTooltip, .asHero,
-│   │    .withAspectRatio, .safeArea, .ignorePointer, .absorbPointer,
-│   │    .clipRect, .clipOval, .clipRounded, .asCircle, .withBorder)
-│   └── ImageExtensions on Image
-│       (.rounded, .circular, .bordered, .circleAvatar, .shadow,
-│        .colorFiltered, .grayscale, .sepia, .opacity, .blurred,
-│        .sized, .ratio, .gradientOverlay, .colorOverlay, .fadeIn)
-│
-├── String → Image Extensions
-│   ├── StringImageExtensions on String
-│   │   (.asAssetImage, .asNetworkImage, .asSmartNetworkImage,
-│   │    .toAssetImageProvider, .toNetworkImageProvider,
-│   │    .asDecorationImage, .asNetworkDecorationImage)
-│   └── ImageProviderExtensions on ImageProvider
-│       (.toImage, .toDecorationImage, .toCircleAvatar, .toInk)
-│
-└── Reusable Widgets
-    ├── CustomAppBar         (PreferredSizeWidget)
-    ├── CustomBottomSheet    (widget + static show method)
-    ├── CustomButton         (general purpose button)
-    ├── CustomIconButton     (circular icon button with badge)
-    └── CustomTextField      (type-driven smart text field)
+└── lib/src/wonzy.dart  (Wonzy Namespace)
+    ├── Wonzy (final class — namespace)
+    │   (.appBar, .button, .bottomSheet, .textField)
+    │
+    ├── Wonzy.appBar(...)         → PreferredSizeWidget
+    ├── Wonzy.button.standard(...)→ ElevatedButton tarzı buton
+    ├── Wonzy.button.icon(...)    → Rozet destekli ikon buton
+    ├── Wonzy.bottomSheet(...)    → CustomBottomSheet widget'ı
+    ├── Wonzy.bottomSheet.show(...)→ Future<T?> modal
+    ├── Wonzy.textField(...)      → Form entegreli metin alanı
+    └── CustomFieldType           (enum — dışa aktarılır)
 ```
 
 ---

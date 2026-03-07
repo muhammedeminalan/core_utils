@@ -1,7 +1,13 @@
-/// wonzy_core_utils — Extensions & Reusable Widgets
+/// wonzy_core_utils — Extension'lar katmanı.
 ///
-/// Tüm extension'lar ve ortak widget'lar bu barrel dosyasından dışarı açılır.
-/// Kullanım: `import 'package:wonzy_core_utils/wonzy_core_utils.dart';`
+/// Yalnızca extension dosyalarını dışarı açar.
+/// Widget'lara erişmek için `Wonzy` namespace'ini kullanın:
+/// ```dart
+/// import 'package:wonzy_core_utils/wonzy_core_utils.dart';
+///
+/// Wonzy.button.standard(text: 'Giriş')
+/// Wonzy.appBar(title: 'Ana Sayfa')
+/// ```
 library;
 
 // ── Context Extensions ──
@@ -27,9 +33,7 @@ export 'src/extensions/widget/images_extensions.dart';
 export 'src/extensions/widget/paddings_extensions.dart';
 export 'src/extensions/widget/sizebox_extensions.dart';
 export 'src/extensions/widget/widget_extensions.dart';
-// ── Reusable Widgets ──
-export 'src/widgets/app_bar/costum_app_bar.dart';
-export 'src/widgets/bottom_sheet/costum_bottom_sheet.dart';
-export 'src/widgets/buttons/costum_button.dart';
-export 'src/widgets/buttons/costum_icon_button.dart';
-export 'src/widgets/text_field/custom_text_field.dart';
+
+// ── Widget sınıfları artık Wonzy namespace'i üzerinden erişilir ──
+// Doğrudan export kaldırıldı (v2.0.0 breaking change).
+// Kullanım: Wonzy.button / Wonzy.appBar / Wonzy.bottomSheet / Wonzy.textField

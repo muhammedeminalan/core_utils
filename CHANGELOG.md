@@ -5,6 +5,39 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.0] - 2025-07-16
+
+### KIRICI DEĞİŞİKLİKLER (Breaking Changes)
+
+- **`Wonzy` namespace API**: Widget sınıfları (`CustomAppBar`, `CustomButton`, `CustomIconButton`,
+  `CustomBottomSheet`, `CustomTextField`) artık paket tarafından dışa aktarılmamaktadır.
+  Bunların yerine merkezi `Wonzy` namespace'i üzerinden erişilmelidir:
+  - `CustomAppBar(...)` → `Wonzy.appBar(...)`
+  - `CustomButton(...)` → `Wonzy.button.standard(...)`
+  - `CustomIconButton(...)` → `Wonzy.button.icon(...)`
+  - `CustomBottomSheet(...)` → `Wonzy.bottomSheet(...)`
+  - `CustomBottomSheet.show(...)` → `Wonzy.bottomSheet.show(...)`
+  - `CustomTextField(...)` → `Wonzy.textField(...)`
+  **Geçiş:** `wonzy_core_utils.dart` import'unu güncelleyin ve yukarıdaki eşleştirmeyi uygulayın.
+
+### Added
+
+- `lib/src/wonzy.dart`: `Wonzy` merkezi namespace sınıfı eklendi.
+  - `final class Wonzy` — özel `Wonzy._()` constructor, yanlışlıkla örnekleme engellendi.
+  - `Wonzy.appBar(...)` — `PreferredSizeWidget` döndüren `call()` operatörü (`Scaffold.appBar:` ile doğrudan uyumlu).
+  - `Wonzy.button.standard(...)` — standart `ElevatedButton` tarzı buton.
+  - `Wonzy.button.icon(...)` — rozet destekli ikon buton.
+  - `Wonzy.bottomSheet(...)` — `CustomBottomSheet` widget'ı döndürür.
+  - `Wonzy.bottomSheet.show<T>(...)` — modal bottom sheet gösterir, `Future<T?>` döndürür.
+  - `Wonzy.textField(...)` — form alanı ile entegre metin girişi.
+- `CustomFieldType` enum'u `wonzy_core_utils.dart` üzerinden dışa aktarılmaya başlandı.
+- Tüm public API ve dartdoc yorumları Türkçe olarak güncellendi.
+
+### Changed
+
+- `lib/core_utils.dart`: Artık yalnızca extension barrel'ı (widget export'ları kaldırıldı).
+- `lib/wonzy_core_utils.dart`: Extension'lar + Wonzy namespace'i birlikte dışa aktarır.
+
 ## [0.3.0] - 2026-03-01
 
 ### Breaking (backward-compatible via deprecated aliases)
